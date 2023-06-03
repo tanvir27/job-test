@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import SingleProduct from "../SingleProduct/SingleProduct";
 
 const ShowProduct = () => {
   const [product, setProduct] = useState([]);
@@ -7,11 +9,21 @@ const ShowProduct = () => {
     fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data)
         setProduct(data);
       });
   }, []);
 
+    //limit
+    fetch("https://fakestoreapi.com/products?limit=5")
+      .then((res) => res.json()) 
+        .then((data) => {
+            // console.log(data);
+            setProduct(data)
+        });
+    
+
+    
   const handleSearch = () => {};
 
   return (
@@ -30,30 +42,17 @@ const ShowProduct = () => {
       <div className="d-flex gap-4">
         <div className="col-md-7 cols-sm-12">
           {product.map((single_product) => (
-            <div className=" card-group">
-              <div className="card text-center">
-                <img
-                  src={single_product.image}
-                  className="card-img-top img-fluid p-5"
-                  alt="..."
-                  width="200"
-                  height="300"
-                />
-
-                <div className="d-flex my-4 justify-content-around">
-                  <button className="btn   btn-primary ">Edit</button>
-                  <button className="btn  btn-warning ">Delete</button>
-                </div>
-                <h3 className="card-title">{single_product.title} </h3>
-                <h5>price: {single_product.price}</h5>
-                <h5>{single_product.category}</h5>
-              </div>
-            </div>
+        <SingleProduct  single_product ={single_product} ></SingleProduct>
           ))}
         </div>
 
         <div className="col-md-5 col-sm-12">
-          <h2>Add New Product</h2>
+                  <h2>Add New Product</h2>
+                  <form >
+                      
+                      <input type="text" placeholder="Name"/>
+
+                  </form>
         </div>
       </div>
     </div>
